@@ -16,10 +16,11 @@ badVibesReplies = [
   "gwib",
   "no",
   "no <3",
-  "yea alright"
+  "yea alright",
+  "swiggity swooty fix your fuckin vibes at once"
 ]
 
-logintoken = "ODY1MjQ4NjcxMjI5NjczNDcz.YPBPng.Ab2Y3odKz25T5eL8VmPJa0hp6yc";
+//logintoken = "ODY1MjQ4NjcxMjI5NjczNDcz.YPBPng.Ab2Y3odKz25T5eL8VmPJa0hp6yc";
 
 function getQuote() {
   return fetch("https://zenquotes.io/api/random")
@@ -60,8 +61,6 @@ client.on("message", msg => {
 process.on('UnhandledPromiseRejectionWarning', error => {
 	console.error('Unhandled promise rejection:', error);
 });
-
-//console.log(env.TOKEN)
 
 client.login(process.env.TOKEN);
 
