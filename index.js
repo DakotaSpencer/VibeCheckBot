@@ -3,11 +3,18 @@ const mySecret = process.env['TOKEN']
 const Discord = require("discord.js")
 const fetch = require("node-fetch")
 const client = new Discord.Client()
+const data = client.data
+const guild = new Discord.Guild(client, data);
+
+const path = require('path')
+
+
 require("dotenv").config();
 console.log(client)
 
+sadWords = ["sad", "depressed", "unhappy", "angry", "miserable", "fuck", "shit", "pissed", "not vibing"];
 
-sadWords = ["sad", "depressed", "unhappy", "angry", "miserable", "fuck", "shit", "pissed", "die"];
+serverTemplates = [];
 
 badVibesReplies = [
   "Vibes are attrocious.",
@@ -19,8 +26,6 @@ badVibesReplies = [
   "yea alright",
   "swiggity swooty fix your fuckin vibes at once"
 ]
-
-//logintoken = "ODY1MjQ4NjcxMjI5NjczNDcz.YPBPng.Ab2Y3odKz25T5eL8VmPJa0hp6yc";
 
 function getQuote() {
   return fetch("https://zenquotes.io/api/random")
@@ -35,7 +40,6 @@ function getQuote() {
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`)
 })
-
 
 //Responds to messages
 client.on("message", msg => {
@@ -55,6 +59,92 @@ client.on("message", msg => {
   }
   if (msg.content === "ping") {
     msg.channel.send("pong");
+  }
+
+  if (msg.content === "!ratthew") {
+    msg.channel.send("https://cdn.discordapp.com/attachments/865251615836340236/865281902989541386/unknown_2.png");
+  }
+
+  if (msg.content === "kill myself" || msg.content ===  "die" || msg.content ===  "suicide") {
+    const messageEmbed = new Discord.MessageEmbed()
+    .setColor('#0099ff')
+    .setTitle('Just checking in :)')
+    .addFields(
+      { name: "\n\tHey there. Based on your message, it seems like things aren't going too well...", value: "Just in case you need it, here are some useful links.", inline: false},
+      { name: '\n\tSuicide Prevention Hotline', value: '800-273-8255', inline: true},
+      { name: '\n\tSuicide Prevention Lifeline Website', value: 'https://suicidepreventionlifeline.org/', inline: true },
+      { name: '\n\tTrevor Project Website', value: 'https://www.thetrevorproject.org/', inline: true },
+      { name: '\nTake a load off, cool down, and enjoy some choccy milk :)', value: 'Just know theres always someone you can reach out to.', inline: false}
+    )
+    .setImage('https://i.imgur.com/xzc544J.jpg')
+    .setTimestamp()
+    .setFooter('If this was in error, please ignore this message.');
+    msg.author.send(messageEmbed);
+  }
+//
+//Joining a users Voice Chat
+  if(msg.content === "!joinVoice"){
+    const channel = client.channels.cache.get(msg.member.voice.channelID);
+    console.log(channel);
+
+
+    if (!channel) return console.error("The channel does not exist!");
+
+    channel.join().then(connection => {
+      msg.channel.send("Successfully connected to " + msg.member.voice.channel.name);
+      connection.play('./music.mp3', { volume: 0.5, quality: 'highestaudio' });
+      
+      // Play a ReadableStream
+        //TODO
+          //Get YouTube link, and play audio from there.
+      console.log("Successfully connected.");
+    }).catch(e => {
+        console.error(e);
+    });  
+  }
+
+  if(msg.content === "!leaveVoice"){
+    const channel = client.channels.cache.get(msg.member.voice.channelID);
+
+    if (!channel) {
+      msg.channel.send("You can only use this if your connected to a voice channel!")
+      return console.error("Not in a voice chat!");
+    }
+    else{
+      channel.leave(); 
+    }
+  }
+
+  if(msg.content === "!music"){
+    const channel = client.channels.cache.get(msg.member.voice.channelID);
+    console.log(channel);
+
+
+    if (!channel) return console.error("The channel does not exist!");
+    
+    channel.join().then(connection => {
+      msg.channel.send("Successfully connected to " + msg.member.voice.channel.name);
+      connection.play(ytdl('https://www.youtube.com/watch?v=ZlAU_w7-Xp8', { quality: 'highestaudio' }));
+      //connection.play('./music.mp3', { volume: 0.5, quality: 'highestaudio' });
+      
+      // Play a ReadableStream
+        //TODO
+          //Get YouTube link, and play audio from there.
+      console.log("Successfully connected.");
+    }).catch(e => {
+        console.error(e);
+    });  
+  }
+
+  if (msg.content === "s!backup") {
+    guild.createTemplate("template_copy")
+
+    //guild.fetchTemplates(serverTemplates[0])
+    console.log("Template fetched!")
+  }
+
+  if (msg.content === "!deleteServer") {
+    guild.delete()
   }
 })
 
