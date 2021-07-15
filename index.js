@@ -14,7 +14,9 @@ badVibesReplies = [
   "Yo ur vibes are all off my guy",
   "fix ur vibes at once pls",
   "gwib",
-  "no"
+  "no",
+  "no <3",
+  "yea alright"
 ]
 
 logintoken = "ODY1MjQ4NjcxMjI5NjczNDcz.YPBPng.Ab2Y3odKz25T5eL8VmPJa0hp6yc";
@@ -53,12 +55,6 @@ client.on("message", msg => {
   if (msg.content === "ping") {
     msg.channel.send("pong");
   }
-})
-
-client.on("message", msg => {
-  if (msg.content === "ping") {
-   msg.channel.send("pong");
- }
 })
 
 process.on('UnhandledPromiseRejectionWarning', error => {
