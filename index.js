@@ -115,6 +115,27 @@ client.on("message", msg => {
     }
   }
 
+  if(msg.content === "!mariachi"){
+    const channel = client.channels.cache.get(msg.member.voice.channelID);
+    console.log(channel);
+
+
+    if (!channel) return console.error("The channel does not exist!");
+    
+    channel.join().then(connection => {
+      msg.channel.send("Successfully connected to " + msg.member.voice.channel.name);
+      //connection.play(ytdl('https://www.youtube.com/watch?v=ZlAU_w7-Xp8', { quality: 'highestaudio' }));
+      connection.play('./mariachi.mp3', { volume: 0.5, quality: 'highestaudio' });
+      
+      // Play a ReadableStream
+        //TODO
+          //Get YouTube link, and play audio from there.
+      console.log("Successfully connected.");
+    }).catch(e => {
+        console.error(e);
+    }); 
+  }
+
   if(msg.content === "!music"){
     const channel = client.channels.cache.get(msg.member.voice.channelID);
     console.log(channel);
@@ -124,7 +145,7 @@ client.on("message", msg => {
     
     channel.join().then(connection => {
       msg.channel.send("Successfully connected to " + msg.member.voice.channel.name);
-      connection.play(ytdl('https://www.youtube.com/watch?v=ZlAU_w7-Xp8', { quality: 'highestaudio' }));
+      //connection.play(ytdl('https://www.youtube.com/watch?v=ZlAU_w7-Xp8', { quality: 'highestaudio' }));
       //connection.play('./music.mp3', { volume: 0.5, quality: 'highestaudio' });
       
       // Play a ReadableStream
