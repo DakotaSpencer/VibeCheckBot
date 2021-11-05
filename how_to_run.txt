@@ -1,0 +1,2 @@
+open cmd
+nodemon bot.js
